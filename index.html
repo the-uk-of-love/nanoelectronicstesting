@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nano Electronics Testing — Professional NLJD Testing, UK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F1F2EE;
+    --panel:#FFFFFF;
+    --ink:#14181B;
+    --ink-muted:#52585C;
+    --line:#D8DAD4;
+    --teal:#0F6E56;
+    --teal-light:#E1F5EE;
+    --teal-dark:#085041;
+    --coral:#C1440E;
+    --coral-light:#FAECE7;
+    --coral-dark:#7A2B09;
+    --radius:10px;
+    --mono:'IBM Plex Mono', monospace;
+    --sans:'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--teal-dark);}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+  }
+  h1,h2,h3{font-family:var(--mono);font-weight:700;line-height:1.15;letter-spacing:-0.01em;}
+  h1{font-size:clamp(32px,5vw,52px);}
+  h2{font-size:clamp(24px,3.2vw,32px);}
+  h3{font-size:18px;}
+  p{color:var(--ink-muted);}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:14px;
+    font-weight:500;
+    padding:14px 24px;
+    border-radius:6px;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+  }
+  .btn-primary{background:var(--teal);color:#fff;}
+  .btn-primary:hover{background:var(--teal-dark);}
+  .btn-secondary{background:transparent;color:var(--ink);border-color:var(--line);}
+  .btn-secondary:hover{border-color:var(--ink);}
+
+  /* nav */
+  header{
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:var(--bg);z-index:10;
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:0.02em;}
+  .logo span{color:var(--teal-dark);}
+  .nav-links{display:flex;gap:28px;align-items:center;}
+  .nav-links a{font-family:var(--mono);font-size:13px;color:var(--ink-muted);text-decoration:none;}
+  .nav-links a:hover{color:var(--ink);}
+
+  /* hero */
+  .hero{padding:72px 0 56px;position:relative;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.2fr 0.8fr;gap:48px;align-items:center;
+  }
+  .hero h1{margin:14px 0 18px;}
+  .hero p.lead{font-size:17px;max-width:44ch;margin-bottom:28px;}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+
+  .readout{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px;
+  }
+  .readout-row{display:flex;align-items:baseline;gap:6px;margin-bottom:6px;}
+  .readout-num{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--teal-dark);}
+  .readout-of{font-family:var(--mono);font-size:20px;color:var(--ink-muted);}
+  .readout-label{font-family:var(--mono);font-size:12px;color:var(--ink-muted);letter-spacing:0.03em;text-transform:uppercase;margin-bottom:16px;}
+  .trace{width:100%;height:44px;margin-top:6px;}
+  .status-dot{
+    display:inline-block;width:7px;height:7px;border-radius:50%;
+    background:var(--coral);margin-right:6px;
+    animation:blink 1.8s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce){.status-dot{animation:none;}}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .status-line{font-family:var(--mono);font-size:11px;color:var(--ink-muted);margin-top:14px;}
+
+  /* sections */
+  section{padding:56px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .section-head{max-width:60ch;margin-bottom:32px;}
+  .section-head h2{margin-top:8px;}
+
+  .finding-text{max-width:68ch;font-size:16px;}
+  .finding-text strong{color:var(--ink);font-weight:600;}
+
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h3{margin-bottom:8px;}
+  .card p{font-size:14px;}
+
+  .diagram-note{font-size:13px;color:var(--ink-muted);margin-top:10px;}
+
+  .callout{
+    background:var(--coral-light);
+    border-left:3px solid var(--coral);
+    border-radius:0 var(--radius) var(--radius) 0;
+    padding:20px 24px;
+    max-width:70ch;
+  }
+  .callout p{color:var(--coral-dark);font-size:14px;margin:0;}
+  .callout .eyebrow{color:var(--coral-dark);}
+
+  .fund-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .fund-meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap;}
+  .meta-block{font-family:var(--mono);}
+  .meta-block .num{font-size:22px;font-weight:700;color:var(--teal-dark);display:block;}
+  .meta-block .lbl{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.03em;}
+
+  form{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px;}
+  .field{margin-bottom:16px;}
+  label{display:block;font-family:var(--mono);font-size:12px;color:var(--ink-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.03em;}
+  input[type=text],input[type=email],input[type=number]{
+    width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:6px;
+    font-family:var(--sans);font-size:14px;background:#fff;color:var(--ink);
+  }
+  input:focus{outline:2px solid var(--teal);outline-offset:1px;}
+  .radio-row{display:flex;flex-direction:column;gap:8px;}
+  .radio-opt{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink);}
+  .radio-opt input{width:auto;}
+  .form-note{font-size:12px;color:var(--ink-muted);margin-top:12px;}
+
+  .faq-item{border-bottom:1px solid var(--line);padding:18px 0;}
+  .faq-item:last-child{border-bottom:none;}
+  .faq-q{font-family:var(--mono);font-size:15px;font-weight:500;margin-bottom:8px;}
+  .faq-a{font-size:14px;max-width:66ch;}
+
+  footer{padding:36px 0;}
+  .footer-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:flex-start;}
+  .footer-disclaimer{font-size:12px;color:var(--ink-muted);max-width:50ch;}
+  .footer-contact{font-family:var(--mono);font-size:13px;text-align:right;}
+
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr;}
+    .cards{grid-template-columns:1fr;}
+    .fund-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .footer-grid{flex-direction:column;}
+    .footer-contact{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">NANO ELECTRONICS <span>TESTING</span></div>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#fund">Fund the launch</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a href="#fund" class="btn btn-primary">Back the launch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">First of its kind — UK &amp; Europe</div>
+      <h1>Is there synthetic microelectronics in your body?</h1>
+      <p class="lead">Professional NLJD testing — the same class of equipment used by security firms to sweep for hidden electronics — is coming to the UK. Be among the first to find out.</p>
+      <div class="cta-row">
+        <a href="#fund" class="btn btn-primary">Back the equipment fund</a>
+        <a href="#how" class="btn btn-secondary">See how testing works</a>
+      </div>
+    </div>
+    <div class="readout">
+      <div class="readout-label"><span class="status-dot"></span>First study results</div>
+      <div class="readout-row">
+        <span class="readout-num">22</span><span class="readout-of">/ 22</span>
+      </div>
+      <div class="readout-label">Participants returned a positive signal</div>
+      <svg class="trace" viewBox="0 0 300 44" preserveAspectRatio="none">
+        <polyline points="0,30 20,30 26,10 32,36 38,18 44,30 60,30 66,6 72,34 78,22 84,30 100,30 106,14 112,32 118,20 124,30 140,30 150,30 156,8 162,36 168,16 174,30 190,30 196,12 202,34 208,24 214,30 230,30 240,30 246,10 252,32 258,18 264,30 280,30 286,20 292,30 300,30"
+          fill="none" stroke="#0F6E56" stroke-width="1.5"/>
+      </svg>
+      <div class="status-line">Detection range: 10%–100% probability across multiple body locations</div>
+    </div>
+  </div>
+</section>
+
+<section id="finding">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What we found</div>
+      <h2>Every participant returned at least one positive reading</h2>
+    </div>
+    <p class="finding-text">
+      In the first study of its kind, <strong>22 participants were each tested on two separate occasions</strong> using professional-grade electronics detection equipment — the same class of device security companies use to sweep for hidden bugs and transmitters. The equipment is built for one purpose: flagging the presence of synthetic silicon or microelectronic components, active or passive, regardless of what they're doing. <strong>Every participant returned a positive signal</strong>, with probability readings ranging from 10% to 100% across different locations on the body. The open question is what these signals mean, and where they come from.
+    </p>
+  </div>
+</section>
+
+<section id="get">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What's included</div>
+      <h2>What you'll get</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>A complete test record</h3>
+        <p>Full documentation of your results, in writing, for your own reference.</p>
+      </div>
+      <div class="card">
+        <h3>A professionally verified first</h3>
+        <p>Be the first in your family or circle of friends to have this test done properly, with real equipment.</p>
+      </div>
+      <div class="card">
+        <h3>A place among the first</h3>
+        <p>You'll be among the earliest people in the world to bring awareness to this part of our environment.</p>
+      </div>
+      <div class="card">
+        <h3>Answers worth having</h3>
+        <p>New, concrete information that may speak to questions you've been carrying for a while.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">The process</div>
+      <h2>How testing works</h2>
+    </div>
+
+    <svg width="100%" viewBox="0 0 680 176" role="img" aria-label="Three step process: book, scan, report">
+      <defs>
+        <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <g>
+        <rect x="50" y="80" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.75"/>
+        <text x="140" y="100" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#085041">1. Book</text>
+        <text x="140" y="120" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="#0F6E56">Choose your test date</text>
+      </g>
+      <line x1="230" y1="108" x2="248" y2="108" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arrow2)"/>
+      <g>
+        <rect x="250" y="80" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.75"/>
+        <text x="340" y="100" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#085041">2. Scan</text>
+        <text x="340" y="120" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="#0F6E56">NLJD scan, about 30 min</text>
+      </g>
+      <line x1="430" y1="108" x2="448" y2="108" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arrow2)"/>
+      <g>
+        <rect x="450" y="80" width="180" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.75"/>
+        <text x="540" y="100" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#085041">3. Report</text>
+        <text x="540" y="120" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="#0F6E56">Documented results</text>
+      </g>
+    </svg>
+
+    <div style="height:32px;"></div>
+
+    <svg width="100%" viewBox="0 0 680 360" role="img" aria-label="Body map showing common front and back scan locations">
+      <text x="170" y="40" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#14181B">Front view</text>
+      <g fill="#F1F2EE" stroke="#52585C" stroke-width="0.75">
+        <circle cx="170" cy="70" r="20"/>
+        <rect x="140" y="95" width="60" height="110" rx="20"/>
+        <rect x="108" y="100" width="22" height="85" rx="11"/>
+        <rect x="210" y="100" width="22" height="85" rx="11"/>
+        <rect x="145" y="205" width="25" height="100" rx="12"/>
+        <rect x="175" y="205" width="25" height="100" rx="12"/>
+      </g>
+      <g fill="#F0997B" stroke="#C1440E" stroke-width="0.75">
+        <circle cx="170" cy="70" r="5"/>
+        <circle cx="170" cy="130" r="5"/>
+        <circle cx="170" cy="180" r="5"/>
+        <circle cx="119" cy="140" r="5"/>
+        <circle cx="188" cy="260" r="5"/>
+      </g>
+      <text x="510" y="40" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#14181B">Back view</text>
+      <g fill="#F1F2EE" stroke="#52585C" stroke-width="0.75">
+        <circle cx="510" cy="70" r="20"/>
+        <rect x="480" y="95" width="60" height="110" rx="20"/>
+        <rect x="448" y="100" width="22" height="85" rx="11"/>
+        <rect x="550" y="100" width="22" height="85" rx="11"/>
+        <rect x="485" y="205" width="25" height="100" rx="12"/>
+        <rect x="515" y="205" width="25" height="100" rx="12"/>
+      </g>
+      <g fill="#F0997B" stroke="#C1440E" stroke-width="0.75">
+        <circle cx="490" cy="120" r="5"/>
+        <circle cx="530" cy="120" r="5"/>
+        <circle cx="510" cy="180" r="5"/>
+        <circle cx="497" cy="280" r="5"/>
+      </g>
+      <text x="340" y="335" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="#52585C">Marked points show where scans are commonly taken; exact locations vary per participant</text>
+    </svg>
+    <p class="diagram-note">Every session is one-to-one. Your results are documented and shared only with you.</p>
+  </div>
+</section>
+
+<section id="disclaimer">
+  <div class="wrap">
+    <div class="callout">
+      <div class="eyebrow">Important note</div>
+      <p>This is not a medical test. Any information connected with this testing is provided for personal use and exploration only, and is not intended to diagnose, treat, or replace advice from a qualified medical professional.</p>
+    </div>
+  </div>
+</section>
+
+<section id="fund">
+  <div class="wrap fund-grid">
+    <div>
+      <div class="eyebrow">Fundraising now</div>
+      <h2>Help us bring this equipment to the UK</h2>
+      <p>We're raising the funds to purchase professional-grade NLJD equipment so testing can begin here for the first time. Every contribution moves that date closer.</p>
+      <div class="fund-meta">
+        <div class="meta-block"><span class="num">15 Sep</span><span class="lbl">Target start date</span></div>
+        <div class="meta-block"><span class="num">UK</span><span class="lbl">First of its kind</span></div>
+        <div class="meta-block"><span class="num">1:1</span><span class="lbl">Private sessions</span></div>
+      </div>
+    </div>
+    <form>
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="field">
+        <label>I'd like to</label>
+        <div class="radio-row">
+          <label class="radio-opt"><input type="radio" name="intent" value="support" checked> Support the equipment fund</label>
+          <label class="radio-opt"><input type="radio" name="intent" value="notify"> Be notified when booking opens</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="amount">Contribution amount (optional)</label>
+        <input type="number" id="amount" name="amount" placeholder="£">
+      </div>
+      <div class="field">
+        <label class="radio-opt" style="text-transform:none;font-family:var(--sans);font-size:13px;">
+          <input type="checkbox" name="priority" style="width:auto;"> Give me early booking priority
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Submit</button>
+      <p class="form-note">By submitting, you agree to be contacted about the fundraiser and test booking. We won't share your details.</p>
+    </form>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Questions</div>
+      <h2>Frequently asked</h2>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What is an NLJD scan?</div>
+      <p class="faq-a">A non-linear junction detector is a piece of equipment that identifies the electronic signature of semiconductor material — the kind of junction found in any electronic component, active or passive. It's the standard tool security professionals use to find hidden bugs and transmitters.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is this a medical test?</div>
+      <p class="faq-a">No. This is not a medical diagnosis of any kind. It's an exploratory test using detection equipment, and any results are for personal information only.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What happens after my test?</div>
+      <p class="faq-a">You'll receive complete documentation of your results, including the readings taken at each location tested, for your own records.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">When does testing start?</div>
+      <p class="faq-a">We're targeting the week of 15 September 2026, once the equipment fund is complete. Join the list above to be notified as soon as booking opens.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-disclaimer">
+      Nano Electronics Testing is not a medical service. Testing is for personal exploration only and does not constitute medical advice, diagnosis, or treatment.
+    </div>
+    <div class="footer-contact">
+      NANO ELECTRONICS TESTING<br>
+      United Kingdom<br>
+      <a href="mailto:info@nanoelectronicstesting.com">info@nanoelectronicstesting.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
